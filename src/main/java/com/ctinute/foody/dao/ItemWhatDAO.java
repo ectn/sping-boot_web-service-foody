@@ -1,67 +1,77 @@
 package com.ctinute.foody.dao;
 
-/**
- * Created by ectn on 5/1/2017.
- */
-public class ItemWhatDAO {
+import com.ctinute.foody.models.ItemWhat;
 
-    /*
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-    private ArrayList<ItemWhat> getItemList(String query) {
-        ArrayList<ItemWhat> list = new ArrayList<>();
-        Cursor res =  db.rawQuery(query,null);
-        if ((res.moveToFirst()) && res.getCount() > 0){
-            while(!res.isAfterLast()){
-                ItemWhat item = new ItemWhat();
-                // TODO: change this after change item-what database
-                item.setId(res.getInt(res.getColumnIndex("ID")));
-                item.setImage(res.getString(res.getColumnIndex("IMG")));
-                item.setFoodName("<Tên món ăn>");
-                item.setLocationName(res.getString(res.getColumnIndex("NAME")));
-                item.setAddress(res.getString(res.getColumnIndex("ADDRESS")));
-                list.add(item);
-                res.moveToNext();
-            }
-        }
-        res.close();
-        return list;
+public class ItemWhatDAO extends DAO {
+
+    private static final String TABLE_NAME = "itemwhat";
+
+    public ItemWhatDAO() {
+        super();
     }
 
-    public ArrayList<ItemWhat> findItemsByFields(int cityId, int districtId, int streetId, int categoryId) {
+    private List<ItemWhat> getItems(String query){
+        List<ItemWhat> items = new ArrayList<>();
+        try {
+            ResultSet rs = connection.createStatement().executeQuery(query);
+            while (rs.next()){
+                ItemWhat item = new ItemWhat();
+                item.setId(rs.getInt("ID"));
+                item.setFoodName(rs.getString("NAME"));
+                item.setLocationName(rs.getString("PLACE"));
+                item.setAddress(rs.getString("ADDRESS"));
+                item.setImage(rs.getString("IMAGEURL"));
+                item.setUserName(rs.getString("USERNAME"));
+                item.setUserImg(rs.getString("USERIMG"));
+                item.setDate(rs.getString("DATE"));
+                items.add(item);
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+    // danh sach item, co gioi han
+    public List<ItemWhat> findItemsByFields(int cityId, int districtId, int streetId, int categoryId, int firstIndex, int numberOfItems) {
         String query;
         if (categoryId <= 1){
             // no category (all)
             if (streetId > 0) {
                 // tim theo duong
-                query =  "select * from "+TABLE_NAME+ " where STREETID = "+streetId;
+                query =  "select * from "+TABLE_NAME+ " where STREETID = "+streetId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else if (districtId > 0) {
                 // tim theo quan/huyen
-                query =  "select * from "+TABLE_NAME+ " where DISTRICTID = "+districtId;
+                query =  "select * from "+TABLE_NAME+ " where DISTRICTID = "+districtId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else if (cityId > 0) {
-                query =  "select * from "+TABLE_NAME+ " where CITYID = "+cityId;
+                query =  "select * from "+TABLE_NAME+ " where CITYID = "+cityId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else
-                query =  "select * from "+TABLE_NAME;    // lay het
+                query =  "select * from "+TABLE_NAME+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
         }
         else {
             // thim theo category
             if (streetId > 0) {
                 // tim theo duong
-                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and STREETID = "+streetId;
+                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and STREETID = "+streetId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else if (districtId > 0) {
                 // tim theo quan/huyen
-                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and DISTRICTID = "+districtId;
+                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and DISTRICTID = "+districtId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else if (cityId > 0) {
-                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and CITYID = "+cityId;
+                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and CITYID = "+cityId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else
-                query =  "select * from "+TABLE_NAME+" where CATEGORYID="+categoryId;    // lay het
+                query =  "select * from "+TABLE_NAME+" where CATEGORYID="+categoryId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
         }
-        return getItemList(query);
+        return getItems(query);
     }
-    */
 }

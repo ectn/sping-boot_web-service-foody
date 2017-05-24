@@ -1,8 +1,5 @@
 package com.ctinute.foody.dao;
 
-import com.ctinute.foody.models.Category;
-import com.ctinute.foody.models.City;
-import com.ctinute.foody.models.District;
 import com.ctinute.foody.models.Street;
 
 import java.sql.ResultSet;
@@ -11,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StreetDAO extends DAO {
+
+    private static final String TABLE_NAME = "street";
+
     public StreetDAO(){
         super();
     }
@@ -34,7 +34,7 @@ public class StreetDAO extends DAO {
 
     // danh sach tat ca duong tu quan/huyen
     public List<Street> getStreetsByDistrictId(int districtId){
-        String query = "select * from foody.street where DISTRICTID = "+districtId;
+        String query = "select * from "+TABLE_NAME+" where DISTRICTID = "+districtId;
         return getStreets(query);
     }
 

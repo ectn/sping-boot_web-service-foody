@@ -6,6 +6,9 @@ public class ItemWhat {
     private String foodName;
     private String locationName;
     private String address;
+    private String userName;
+    private String userImg;
+    private String date;
 
     public int getId() {
         return id;
@@ -45,5 +48,29 @@ public class ItemWhat {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

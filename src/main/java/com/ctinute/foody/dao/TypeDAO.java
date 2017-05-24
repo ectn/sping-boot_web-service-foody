@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TypeDAO extends DAO {
+
+    private static final String TABLE_NAME = "type";
+
     public TypeDAO() {
         super();
     }
@@ -20,8 +23,8 @@ public class TypeDAO extends DAO {
                 Type Type = new Type();
                 Type.setId(rs.getInt("ID"));
                 Type.setName(rs.getString("NAME"));
-                Type.setImage(rs.getString("IMAGE"));
-                Type.setNewType(rs.getBoolean("ISNEW"));
+                Type.setImage(rs.getString("IMG"));
+                Type.setNew(rs.getBoolean("ISNEW"));
                 types.add(Type);
             }
         } catch(SQLException e){
@@ -31,7 +34,7 @@ public class TypeDAO extends DAO {
     }
 
     public List<Type> getAllType(){
-        String query = "select * from foody.itype";
+        String query = "select * from "+TABLE_NAME;
         return getTypes(query);
     }
 

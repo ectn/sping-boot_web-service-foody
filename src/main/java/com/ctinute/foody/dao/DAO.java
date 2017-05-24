@@ -7,14 +7,18 @@ import java.sql.SQLException;
 
 public class DAO {
     // properties
-    private static final String conURL = "jdbc:sqlserver://foody14110203.database.windows.net:1433;database=foodydb;user=ctinute@foody14110203;password=Chanhtin26;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+    //private static final String conURL = "jdbc:sqlserver://foody14110203.database.windows.net:1433;database=foodydb;user=ctinute@foody14110203;password=Chanhtin26;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+    private static final String conURL = "jdbc:mysql://localhost:3306/foody2?autoReconnect=true&useSSL=false";
+    private static final String conUsername = "root";
+    private static final String conPassword = "chanhtin";
     protected Connection connection;
 
     // constructor
     DAO(){
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(conURL);
+            //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(conURL,conUsername,conPassword);
         } catch (Exception e) {
             // driver false
             e.printStackTrace();

@@ -5,8 +5,6 @@ public class Category {
     private String name;
     private String image;
 
-
-
     public Category() {}
 
     public int getId() {

@@ -4,7 +4,7 @@ public class ItemWhere {
     private int id;
     private String name;
     private String address;
-    private String imageUrl;
+    private String image;
     private double avgRating;
     private String noReview;
     private String noPhoto;
@@ -41,12 +41,12 @@ public class ItemWhere {
         this.address = address;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public double getAvgRating() {

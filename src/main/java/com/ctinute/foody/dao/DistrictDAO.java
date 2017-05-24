@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DistrictDAO extends DAO {
+
+    private static final String TABLE_NAME = "district";
+
     public DistrictDAO(){}
 
     // danh sach quan/huyen tu query
@@ -49,7 +52,7 @@ public class DistrictDAO extends DAO {
 
     // danh sach quan/huyen (kem duong) tu tinh/thanh pho
     public List<District> getDistrictsByCityId(int cityId){
-        String query = "select * from foody.district where CITYID = "+cityId;
+        String query = "select * from "+TABLE_NAME+" where CITYID = "+cityId;
         return getDistrictsWithStreet(query);
     }
 

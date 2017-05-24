@@ -1,6 +1,5 @@
 package com.ctinute.foody.dao;
 
-import com.ctinute.foody.models.Category;
 import com.ctinute.foody.models.City;
 
 import java.sql.ResultSet;
@@ -9,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CityDAO extends DAO {
+
+    private static final String TABLE_NAME = "city";
+
     public CityDAO(){}
 
     // danh sach tinh thanh pho tu query
@@ -30,13 +32,13 @@ public class CityDAO extends DAO {
 
     // danh sach tat ca tinh thanh pho
     public List<City> getAllCities(){
-        String query = "select * from foody.city";
+        String query = "select * from "+TABLE_NAME;
         return getCities(query);
     }
 
     // danh sach tinh thanh pho bang keyword -> chuc nang tim kiem
     public List<City> getCitiesByKeyword(String keyword){
-        String query = "select * from foody.city where NAME like '%"+keyword+"%'";
+        String query = "select * from "+TABLE_NAME+" where NAME like '%"+keyword+"%'";
         return getCities(query);
     }
 

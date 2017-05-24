@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemWheretDAO extends DAO {
-    private final String TABLE_NAME = "foody.itemwhere";
+
+    private final String TABLE_NAME = "itemwhere";
+
     public ItemWheretDAO() {
         super();
     }
@@ -21,7 +23,7 @@ public class ItemWheretDAO extends DAO {
                 ItemWhere item = new ItemWhere();
                 item.setId(rs.getInt("ID"));
                 item.setName(rs.getString("NAME"));
-                item.setImageUrl(rs.getString("IMAGEURL"));
+                item.setImage(rs.getString("IMAGEURL"));
                 item.setAddress(rs.getString("ADDRESS"));
                 item.setAvgRating(rs.getDouble("AVGRATING"));
                 item.setNoReview(rs.getString("REVIEWS"));
@@ -40,64 +42,6 @@ public class ItemWheretDAO extends DAO {
         return items;
     }
 
-    public List<ItemWhere> getAllItems(){
-        String query = "select * from "+TABLE_NAME+";";
-        return getItems(query);
-    }
-
-    public List<ItemWhere> getItemsByCity(int cityId){
-        String query = "select * from "+TABLE_NAME+" where CITYID="+cityId+";";
-        return getItems(query);
-    }
-
-    public List<ItemWhere> getItemsByDistrict(int districtId){
-        String query = "select * from "+TABLE_NAME+" where DISTRICTID="+districtId+";";
-        return getItems(query);
-    }
-
-    public List<ItemWhere> getItemsByStreet(int streetId){
-        String query = "select * from "+TABLE_NAME+" where STREETID="+streetId+";";
-        return getItems(query);
-    }
-
-    public List<ItemWhere> findItemsByFields(int cityId, int districtId, int streetId, int categoryId) {
-        String query;
-        if (categoryId <= 1){
-            // no category (all)
-            if (streetId > 0) {
-                // tim theo duong
-                query =  "select * from "+TABLE_NAME+ " where STREETID = "+streetId;
-            }
-            else if (districtId > 0) {
-                // tim theo quan/huyen
-                query =  "select * from "+TABLE_NAME+ " where DISTRICTID = "+districtId;
-            }
-            else if (cityId > 0) {
-                query =  "select * from "+TABLE_NAME+ " where CITYID = "+cityId;
-            }
-            else
-                query =  "select * from "+TABLE_NAME;    // lay het
-        }
-        else {
-            // thim theo category
-            if (streetId > 0) {
-                // tim theo duong
-                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and STREETID = "+streetId;
-            }
-            else if (districtId > 0) {
-                // tim theo quan/huyen
-                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and DISTRICTID = "+districtId;
-            }
-            else if (cityId > 0) {
-                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and CITYID = "+cityId;
-            }
-            else
-                query =  "select * from "+TABLE_NAME+" where CATEGORYID="+categoryId;    // lay het
-        }
-        return getItems(query);
-    }
-
-
     // danh sach item, co gioi han
     public List<ItemWhere> findItemsByFields(int cityId, int districtId, int streetId, int categoryId, int firstIndex, int numberOfItems) {
         String query;
@@ -105,33 +49,33 @@ public class ItemWheretDAO extends DAO {
             // no category (all)
             if (streetId > 0) {
                 // tim theo duong
-                query =  "select * from "+TABLE_NAME+ " where STREETID = "+streetId+" ORDER BY ID OFFSET "+firstIndex+" ROWS FETCH NEXT "+numberOfItems+" ROWS ONLY";
+                query =  "select * from "+TABLE_NAME+ " where STREETID = "+streetId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else if (districtId > 0) {
                 // tim theo quan/huyen
-                query =  "select * from "+TABLE_NAME+ " where DISTRICTID = "+districtId+" ORDER BY ID OFFSET "+firstIndex+" ROWS FETCH NEXT "+numberOfItems+" ROWS ONLY";
+                query =  "select * from "+TABLE_NAME+ " where DISTRICTID = "+districtId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else if (cityId > 0) {
-                query =  "select * from "+TABLE_NAME+ " where CITYID = "+cityId+" ORDER BY ID OFFSET "+firstIndex+" ROWS FETCH NEXT "+numberOfItems+" ROWS ONLY";
+                query =  "select * from "+TABLE_NAME+ " where CITYID = "+cityId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else
-                query =  "select * from "+TABLE_NAME+" ORDER BY ID OFFSET "+firstIndex+" ROWS FETCH NEXT "+numberOfItems+" ROWS ONLY";    // lay het
+                query =  "select * from "+TABLE_NAME+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
         }
         else {
             // thim theo category
             if (streetId > 0) {
                 // tim theo duong
-                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and STREETID = "+streetId+" ORDER BY ID OFFSET "+firstIndex+" ROWS FETCH NEXT "+numberOfItems+" ROWS ONLY";
+                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and STREETID = "+streetId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else if (districtId > 0) {
                 // tim theo quan/huyen
-                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and DISTRICTID = "+districtId+" ORDER BY ID OFFSET "+firstIndex+" ROWS FETCH NEXT "+numberOfItems+" ROWS ONLY";
+                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and DISTRICTID = "+districtId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else if (cityId > 0) {
-                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and CITYID = "+cityId+" ORDER BY ID OFFSET "+firstIndex+" ROWS FETCH NEXT "+numberOfItems+" ROWS ONLY";
+                query =  "select * from "+TABLE_NAME+ " where CATEGORYID="+categoryId+" and CITYID = "+cityId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
             }
             else
-                query =  "select * from "+TABLE_NAME+" where CATEGORYID="+categoryId+" ORDER BY ID OFFSET "+firstIndex+" ROWS FETCH NEXT "+numberOfItems+" ROWS ONLY";    // lay het
+                query =  "select * from "+TABLE_NAME+" where CATEGORYID="+categoryId+" LIMIT "+numberOfItems+" OFFSET "+firstIndex;
         }
         return getItems(query);
     }

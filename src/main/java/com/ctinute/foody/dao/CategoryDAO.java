@@ -9,6 +9,8 @@ import java.util.List;
 
 public class CategoryDAO extends DAO {
 
+    private static final String TABLE_NAME = "category";
+
     public CategoryDAO() {
         super();
     }
@@ -31,7 +33,7 @@ public class CategoryDAO extends DAO {
     }
 
     public List<Category> getAllCategory(){
-        String query = "select * from foody.category";
+        String query = "select * from "+TABLE_NAME;
         return getCategories(query);
     }
 }
